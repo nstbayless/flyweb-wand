@@ -5,7 +5,8 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('flyweb-express-helloworld:server');
+var debug = require('debug')('flyweb-mp3:server');
+var os =  require('os');
 var http = require('http');
 var mdns = require('mdns');
 
@@ -23,12 +24,24 @@ app.set('port', port);
 var server = http.createServer(app);
 
 /**
- * Create mDNS advertisement.
+ * Create mDNS advertisement for FlyWeb
  */
-var advertisement = mdns.createAdvertisement(mdns.tcp('flyweb'), port, {
-  name: 'FlyWeb Express Hello World',
-  txtRecord: {}
-});
+
+var fw;
+
+function start_flyweb(name) {
+	app._server_name = name;
+	fw = mdns.createAdvertisement(mdns.tcp('flyweb'), port, {
+	  //todo: allow admin to customize broadcast name.
+	  name: app._server_name,
+	  txtRecord: {}
+	});
+
+	fw.start();
+	console.log("")
+	console.log("server started as '" + name + "'");
+	console.log("Listening on http://localhost:3000/ as well as flyweb")
+}
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -98,8 +111,8 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 
-  // Start broadcasting the mDNS advertisement.
-  advertisement.start();
+  // Start broadcasting FlyWeb
+  start_flyweb("Wand (" + os.hostname() + ")");
 }
 
 /**
@@ -107,6 +120,16 @@ function onListening() {
  */
 
 function onClose() {
-  // Stop broadcasting the mDNS advertisement.
-  advertisement.stop();
+  // Stop broadcasting FlyWeb
+  fw.stop();
+}
+
+/**add restart/rename feature to app*/
+app.restart_flyweb = function (name) {
+	console.log("restarting server...")
+	//kill server
+	fw.stop();
+
+	//start server
+	start_flyweb(name);
 }

@@ -1,8 +1,14 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 0px;
+  font: 14px sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+div.track {
+	width:500px;
+    height:300px;
+    background:gray;
 }
