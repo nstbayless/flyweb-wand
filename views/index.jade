@@ -1,6 +1,9 @@
 extends layout
 
+block head
+    script(href='/javascripts/')
+
 block content
 	h1 mouse tracker
-	div(style="width:#{screenwidth}px;height:#{screenheight}px;background:gray")
+	div(style="width:#{500}px;height:#{500*screenheight/screenwidth}px;background:gray" onclick = )
 		
