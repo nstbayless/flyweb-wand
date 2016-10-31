@@ -9,12 +9,24 @@ var routes = require('./routes/index');
 
 var app = express();
 
+var robot = require('robotjs');
+
+// socket dissemination
+var io = require('socket.io')();
+app.io = io;
+
+io.on('connection', function(socket) {
+    socket.on('trackpad', function(pos) {
+        robot.moveMouse(pos.x,pos.y);
+    });
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -1,9 +1,11 @@
 extends layout
 
 block head
-    script(href='/javascripts/')
+    script(src='/javascripts/trackpad.js')
+    script.
+        screenwidth = #{screenwidth};
+        screenheight = #{screenheight};
 
 block content
-	h1 mouse tracker
-	div(style="width:#{500}px;height:#{500*screenheight/screenwidth}px;background:gray" onclick = )
-		
+    h1 mouse tracker
+    div#trackpad(style="width:#{500}px;height:#{500*screenheight/screenwidth}px;background:gray")
