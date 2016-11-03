@@ -1,3 +1,5 @@
+/* globals io, screenwidth, screenheight, window, document*/
+
 // trackpad for mouse
 
 var socket = io();
@@ -10,4 +12,4 @@ function trackPosition(e) {
 
 window.onload = function() {
     document.getElementById('trackpad').onclick=trackPosition;
-}
+};
