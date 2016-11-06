@@ -12,4 +12,8 @@ function trackPosition(e) {
 
 window.onload = function() {
     document.getElementById('trackpad').onclick=trackPosition;
+    var screen = document.getElementById('screen')
+    setInterval(function () {
+        screen.src = "/screen/" + new Date().getTime();
+    }, 600)
 };
