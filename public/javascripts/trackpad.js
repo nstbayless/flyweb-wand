@@ -12,8 +12,14 @@ function trackPosition(e) {
 
 window.onload = function() {
     document.getElementById('trackpad').onclick=trackPosition;
-    var screen = document.getElementById('screen')
+    var screen = document.getElementById('screen');
+    var screenrefbox = document.getElementById('screenref');
     setInterval(function () {
-        screen.src = "/screen/" + new Date().getTime();
-    }, 600)
+        if (screenrefbox.checked) {
+            screen.src = '/screen/' + new Date().getTime();
+            screen.style.visibility='visible';
+        } else {
+            screen.style.visibility='hidden';
+        }
+    }, 100);
 };
